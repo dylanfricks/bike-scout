@@ -39,14 +39,12 @@ export class BikeDetailComponent implements OnInit {
 
   fetchBikeDetails(id: string): void {
     this.bikeService.getBikeDetails(id).subscribe(data => {
-      console.log('Bike details fetched:', data);
       this.bikeDetails.set(data);
       this.selectedImageUrl.set(data?.large_img || null);
     });
   }
 
   onImageClick(imageUrl: PublicImageModel | null): void {
-    console.log('Image clicked:', imageUrl);
     if (!imageUrl) {
       this.selectedImageUrl.set(this.bikeDetails()?.large_img || null);
       return;
