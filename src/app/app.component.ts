@@ -9,7 +9,8 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   selector: 'app-root',
   imports: [FormsModule, RouterOutlet, RouterModule, MatToolbarModule, MatSlideToggleModule, MatIconModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  standalone: true,
 })
 export class AppComponent {
   title = 'Bike Scout';
@@ -18,6 +19,5 @@ export class AppComponent {
 
   applyDarkMode = effect(() => {
     document.body.classList.toggle('dark-mode', this.darkMode());
-    localStorage.setItem('dark-mode', JSON.stringify(this.darkMode()));
   });
 }
