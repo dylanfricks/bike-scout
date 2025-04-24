@@ -1,0 +1,53 @@
+@use "@angular/material" as mat;
+mat-card-title {
+    font-size: xx-large;
+}
+mat-card-subtitle{
+    &.tertiary {
+        @include mat.card-overrides((
+            subtitle-text-color: var(--mat-sys-tertiary),
+            // container-text-color: var(--mat-sys-on-tertiary),
+        ));
+    }
+    &.header.tertiary {
+        font-size: x-large;
+    }
+}
+mat-card-header {
+    margin-bottom: 16px;
+}
+.detail-section {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    // .displayed-image {
+    //     max-width: 50%;
+    // }
+    .detail-column {
+        width: 45%;
+        margin-right: 16px;
+        div {
+            margin-bottom: 8px;
+        }
+    }
+}
+.detail-info {
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px;
+}
+.bike-image {
+    max-width: 600px;
+    max-height: 500px;
+}
+.image-gallery {
+    display: flex; 
+    flex-direction: row; 
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-left: 8px;
+    img {
+        max-height: 100px;
+    }
+}

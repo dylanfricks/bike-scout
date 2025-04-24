@@ -1,0 +1,145 @@
+<mat-card class="bike-detail-card">
+  @if(bikeDetails(); as bike) {
+  <mat-card-header>
+      <mat-card-title><h3>{{ bike.title }}</h3></mat-card-title>
+    @if(bike?.status === 'stolen'){
+      <mat-card-subtitle class="tertiary"> 
+        <strong>{{ bike.status.toUpperCase() }}</strong> 
+        {{ bike.dateStolen | date: 'medium' }}
+      </mat-card-subtitle>
+    }
+  </mat-card-header>
+
+  <mat-card-content>
+    <!-- Image and Stock Info -->
+    <div class="detail-section">
+      <div class="displayed-image">
+        <img [src]="selectedImageUrl()" alt="{{ bike.title }}" class="bike-image" />
+      </div>
+      @if (bike.public_images && bike.public_images.length > 0) {
+        <div class="image-gallery">
+          <img [src]="bike.thumb" (click)="onImageClick(null)" />
+          @for(imageSet of bike.public_images; track imageSet.id) {
+          <img [src]="imageSet.full" (error)="onImageError(imageSet)"
+            (click)="onImageClick(imageSet)" />
+          }
+        </div>
+      }
+    </div>
+
+    <div class="detail-section">
+      <div class="detail-column">
+        <div><strong>Year:</strong> {{ bike.year }}</div>
+        <div><strong>Cycle Type:</strong> {{ bike.cycle_type_slug }}</div>
+        <div><strong>Propulsion Type:</strong> {{ bike.propulsion_type_slug }}</div>
+        <div><strong>Frame Colors:</strong> {{ bike.frame_colors.join(', ') }}</div>
+      </div>
+      <div class="detail-column">
+        <div><strong>Serial:</strong> {{ bike.serial }}</div>
+        <div><strong>Brand:</strong> {{ bike.manufacturer_name }}</div>
+        <div><strong>Frame Model:</strong> {{ bike.frame_model }}</div>
+        <div><strong>Frame Material:</strong> {{ bike.frame_material_slug }}</div>
+      </div>
+    </div>
+    <div class="detail-section">
+      <div><strong>Description:</strong> {{ bike.description }}</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-column">
+        <div><strong>Registry Name:</strong> {{ bike.registry_name || 'Not specified' }}</div>
+          <div><strong>Registry URL:</strong>
+            @if(bike.registry_url) {
+              <a href="{{ bike.registry_url }}" target="_blank">{{ bike.registry_url || 'Not specified' }}</a>
+            } @else {
+              <span>Not specified</span>
+            }
+          </div>
+      </div>
+    </div>
+
+    @if(bike.stolenRecord) {
+    <div class="detail-section">
+        <div class="detail-column">
+          <div><strong>Date Stolen:</strong> {{ bike.dateStolen | date: 'medium' }}</div>
+          <div><strong>Stolen Location:</strong> {{ bike.stolen_location }}</div>
+          <div><strong>Lock Description:</strong> {{ bike.stolenRecord.locking_description }}</div>
+          <div><strong>Lock Tampering:</strong> {{ bike.stolenRecord.lock_defeat_description }}</div>
+          <div><strong>Police Report Number:</strong> {{ bike.stolenRecord.police_report_number }}</div>
+        </div>
+        <div class="detail-column">
+          <div><strong>Theft Description:</strong> {{ bike.stolenRecord.theft_description }}</div>
+      </div>
+    </div>
+    }
+
+    <!-- <mat-grid-list cols="4" rowHeight="fit" style="height:auto" gutterSize="16px"> -->
+      
+      <!-- <mat-grid-tile colspan="3">
+        <img [src]="selectedImageUrl()" alt="{{ bike.title }}" class="bike-image" />
+      </mat-grid-tile>
+      @if(bike.public_images && bike.public_images.length > 0){
+        <mat-grid-tile colspan="1">
+          <div class="image-gallery">
+            <img [src]="bike.thumb" class="public-image" (click)="onImageClick(null)" />
+              @for(imageSet of bike.public_images; track imageSet.id) {
+                
+                <img [src]="imageSet.full" (error)="onImageError(imageSet)"
+                  class="public-image" (click)="onImageClick(imageSet)" />
+                
+              }
+          </div>
+        </mat-grid-tile>
+      } -->
+
+      <!-- Bike Details -->
+      <!-- <mat-grid-tile colspan="2">
+        
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        
+      </mat-grid-tile> -->
+
+      <!-- Description -->
+      <!-- <mat-grid-tile colspan="4">
+        
+      </mat-grid-tile> -->
+
+      <!-- Registry Information -->
+      <!-- <mat-grid-tile colspan="4">
+        <div class="detail-info">
+          <div><strong>Registry Name:</strong> {{ bike.registry_name || 'Not specified' }}</div>
+          <div><strong>Registry URL:</strong>
+            @if(bike.registry_url) {
+              <a href="{{ bike.registry_url }}" target="_blank">{{ bike.registry_url || 'Not specified' }}</a>
+            } @else {
+              <span>Not specified</span>
+            }
+          </div>
+        </div>
+      </mat-grid-tile> -->
+
+      <!-- Stolen Information -->
+       <!-- @if(bike.stolenRecord) {
+         <mat-grid-tile colspan="2">
+          <div class="detail-info">
+            <div><strong>Date Stolen:</strong> {{ bike.dateStolen | date: 'medium' }}</div>
+            <div><strong>Stolen Location:</strong> {{ bike.stolen_location }}</div>
+            <div><strong>Lock Description:</strong> {{ bike.stolenRecord.locking_description }}</div>
+            <div><strong>Lock Tampering:</strong> {{ bike.stolenRecord.lock_defeat_description }}</div>
+            <div><strong>Police Report Number:</strong> {{ bike.stolenRecord.police_report_number }}</div>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2">
+          <div class="detail-info">
+             <div><strong>Theft Description:</strong> {{ bike.stolenRecord.theft_description }}</div>
+           </div>
+         </mat-grid-tile>
+       } -->
+      
+
+    <!-- </mat-grid-list> -->
+  </mat-card-content>
+  } @else {
+    <p>Loading bike details...</p>
+  }
+</mat-card>

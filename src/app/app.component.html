@@ -1,0 +1,12 @@
+<div class="app-container">
+  <mat-toolbar>
+    <h1 style="cursor: pointer;" [routerLink]="['/']">{{ title }}</h1>
+    <span class="spacer"></span>
+    <mat-icon>brightness_5</mat-icon>
+    <mat-slide-toggle [(ngModel)]="darkMode"></mat-slide-toggle>
+    <mat-icon>bedtime</mat-icon>
+  </mat-toolbar>
+  <div class="content-container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

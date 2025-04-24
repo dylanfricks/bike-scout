@@ -1,0 +1,23 @@
+mat-card {
+    margin-bottom: 30px;
+}
+td {
+    cursor: pointer;
+}
+.spacer {
+    flex: 1 1 auto;
+}
+.thumbnail {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    transition: width 0.3s ease, height 0.3s ease;
+    transition-delay: 0s; 
+}
+  
+.thumbnail:hover {
+    width: 200px;
+    height: 200px;
+    transition: width 0.3s ease, height 0.3s ease;
+    transition-delay: 0.5s; /* Wait for 1 second before expanding */
+}

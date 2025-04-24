@@ -1,0 +1,82 @@
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Bike Search</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Search by city name.</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <mat-icon>search</mat-icon>
+    <mat-form-field>
+      <mat-label>Search Bikes</mat-label>
+      <input matInput placeholder="Enter city name" [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange($event)" />
+    </mat-form-field>
+    <span class="spacer"></span>
+    <mat-slide-toggle color="accent" [(ngModel)]="includeAll" (ngModelChange)="filterDataSource()">
+      Include recovered bikes
+    </mat-slide-toggle>
+  </mat-card-actions>
+</mat-card>
+
+@if (bikeService.bikes().length > 0) {
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Search Results</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="thumb">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Thumbnail</th>
+          <td mat-cell *matCellDef="let bike" [routerLink]="['/bike', bike.id]">
+            @if(bike.thumb; as thumb) {
+              <img class="thumbnail" [src]="thumb" alt="{{ bike.title }}" width="50" height="50" />
+            } @else {
+              <span>No Image</span>
+            }
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+          <td mat-cell *matCellDef="let bike" [routerLink]="['/bike', bike.id]">{{ bike.title }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="frame_model">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Frame Model</th>
+          <td mat-cell *matCellDef="let bike" [routerLink]="['/bike', bike.id]">{{ bike.frame_model || 'N/A' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="cycle_type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+          <td mat-cell *matCellDef="let bike" [routerLink]="['/bike', bike.id]">{{ bike.cycle_type_slug || 'N/A' }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="dateLocationStolen">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Date / Location Stolen</th>
+          <td mat-cell *matCellDef="let bike" [routerLink]="['/bike', bike.id]">{{ bike.stolen_location + ' ' + (bike.dateStolen | date: 'short') }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="serial">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Serial</th>
+          <td mat-cell *matCellDef="let bike" [routerLink]="['/bike', bike.id]">{{ bike.serial }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let bike" [routerLink]="['/bike', bike.id]">{{ bike.status }}</td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+  
+      <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+}
+@if(loading()){
+  <div>Loading...</div>
+}
+@if(errorMessage()) {
+  <div>{{ errorMessage() }}</div>
+}

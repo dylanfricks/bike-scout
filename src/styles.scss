@@ -1,0 +1,34 @@
+@use "@angular/material" as mat;
+
+html, body { height: 100%; }
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    background-color: var(--mat-sys-background);
+    color: var(--mat-sys-on-background);
+}
+html {
+    // color-scheme: light dark;
+    @include mat.theme((
+        color: (
+            primary: mat.$cyan-palette,
+            tertiary: mat.$orange-palette,
+            theme-type: light
+        ),
+        typography: Roboto,
+    ));
+}
+.dark-mode {
+    @include mat.theme((
+        color: (
+            primary: mat.$cyan-palette,
+            tertiary: mat.$orange-palette,
+            theme-type: dark,
+        )
+    ));
+
+    @include mat.theme-overrides((
+        background: #24292e
+    ));
+        
+}
