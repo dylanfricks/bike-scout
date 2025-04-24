@@ -4,7 +4,6 @@ import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -14,8 +13,8 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { debounceTime, finalize } from 'rxjs';
-import { BikeSearchModel } from '../models/bike-search.model';
 import { BikeService } from '../services/bike.service';
+import { BikeSearchModel } from '../models/bike-search.model';
 
 @Component({
   selector: 'app-bike-search',
@@ -23,13 +22,12 @@ import { BikeService } from '../services/bike.service';
   templateUrl: './bike-search.component.html',
   styleUrls: ['./bike-search.component.scss'],
   imports: [DatePipe, FormsModule, MatInputModule, MatButtonModule, 
-    MatCardModule, MatProgressSpinnerModule, MatIconModule, MatGridListModule,
+    MatCardModule, MatProgressSpinnerModule, MatIconModule,
     MatTableModule, MatPaginatorModule, MatSortModule, MatSlideToggleModule, RouterModule ],
 })
 export class BikeSearchComponent implements OnInit, AfterViewInit {
   searchQuery = signal<string>('');
   includeAll = signal<boolean>(false);
-  // bikes = signal<BikeSearchModel[]>([]);
   loading = signal<boolean>(false);
   errorMessage = signal<string>('');
 

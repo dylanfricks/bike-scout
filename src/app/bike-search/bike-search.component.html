@@ -3,12 +3,12 @@
     <mat-card-title>Bike Search</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <p>Search by city name.</p>
+    <p>Search by City Name.</p>
   </mat-card-content>
   <mat-card-actions>
-    <mat-icon>search</mat-icon>
+    
     <mat-form-field>
-      <mat-label>Search Bikes</mat-label>
+      <mat-label><mat-icon>search</mat-icon>City</mat-label>
       <input matInput placeholder="Enter city name" [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange($event)" />
     </mat-form-field>
     <span class="spacer"></span>

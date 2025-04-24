@@ -1,17 +1,18 @@
 import { Component, OnInit, signal, effect } from '@angular/core';
 import { DatePipe } from '@angular/common'; 
-import { ActivatedRoute } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BikeService } from '../services/bike.service';
 import { BikeDetailModel } from '../models/bike-detail.model';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatCardModule } from '@angular/material/card';
 import { PublicImageModel } from '../models/public-image.model';
 
 @Component({
   selector: 'app-bike-detail',
   templateUrl: './bike-detail.component.html',
   styleUrls: ['./bike-detail.component.scss'],
-  imports: [DatePipe, MatGridListModule, MatCardModule],
+  imports: [DatePipe, MatButtonModule, MatCardModule, MatIconModule, RouterModule],
   standalone: true,
 })
 export class BikeDetailComponent implements OnInit {
