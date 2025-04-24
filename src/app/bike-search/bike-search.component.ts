@@ -40,6 +40,10 @@ export class BikeSearchComponent implements OnInit, AfterViewInit {
   isSmallDevice: boolean = false;
   constructor(public bikeService: BikeService, private breakpointObserver: BreakpointObserver) {
     effect(() => {
+      if (!this.searchQuery().trim()) {
+        this._clearTable();
+      }
+
       if (this.searchQuery().length > 2) {
         this.fetchBikes(this.searchQuery());
       }
@@ -69,6 +73,8 @@ export class BikeSearchComponent implements OnInit, AfterViewInit {
   }
 
   fetchBikes(query: string) {
+    
+    
     this.loading.set(true);
     this.errorMessage.set('');
     this.bikeService.searchBikes(query)
@@ -113,5 +119,12 @@ export class BikeSearchComponent implements OnInit, AfterViewInit {
     } else {
       this.displayedColumns = ['thumb', 'title', 'frame_model', 'cycle_type', 'dateLocationStolen', 'serial', 'status'];
     }
+  }
+  
+  private _clearTable(): void {
+    this.dataSource.data = [];
+    this.bikeService.bikes.set([]);
+    this.loading.set(false);
+    this.errorMessage.set('');
   }
 }

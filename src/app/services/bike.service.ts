@@ -15,7 +15,7 @@ export class BikeService {
   constructor(private http: HttpClient) {}
 
   searchBikes(city: string): Observable<BikeSearchModel[]> {
-    const url = `${this.apiUrl}/search?location=${city}&distance=10`;
+    const url = `${this.apiUrl}/search?location=${city}&distance=10&stolenness=proximity`;
     return this.http.get<{"bikes": BikeSearchInterface[]}>(url)
       .pipe(map((response: {"bikes": BikeSearchInterface[]}) => response?.bikes?.map(bike => new BikeSearchModel(bike))));
   }
