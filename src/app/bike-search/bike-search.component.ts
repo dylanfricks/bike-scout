@@ -28,6 +28,7 @@ import { BikeSearchModel } from '../models/bike-search.model';
 export class BikeSearchComponent implements OnInit, AfterViewInit {
   searchQuery = signal<string>('');
   includeAll = signal<boolean>(false);
+  bikes = signal<BikeSearchModel[]>([]);
   loading = signal<boolean>(false);
   errorMessage = signal<string>('');
 
@@ -38,7 +39,7 @@ export class BikeSearchComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   isSmallDevice: boolean = false;
-  constructor(public bikeService: BikeService, private breakpointObserver: BreakpointObserver) {
+  constructor(private _bikeService: BikeService, private breakpointObserver: BreakpointObserver) {
     effect(() => {
       if (!this.searchQuery().trim()) {
         this._clearTable();
@@ -57,7 +58,7 @@ export class BikeSearchComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     // Initialize the data source with an empty array
     this.dataSource = new MatTableDataSource<BikeSearchModel>();
-    this.dataSource.data = this.bikeService.bikes();
+    this.dataSource.data = this.bikes();
     // Set up responsive design for the table
     this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.Tablet])
       .subscribe(result => {
@@ -77,13 +78,13 @@ export class BikeSearchComponent implements OnInit, AfterViewInit {
     
     this.loading.set(true);
     this.errorMessage.set('');
-    this.bikeService.searchBikes(query)
+    this._bikeService.searchBikes(query)
     .pipe(
       debounceTime(1000),
       finalize(() => this.loading.set(false)))
     .subscribe({
       next: (data: BikeSearchModel[]) => {
-        this.bikeService.bikes.set(data);
+        this.bikes.set(data);
         this.filterDataSource(data);
       },
       error: (error) => {
@@ -96,7 +97,7 @@ export class BikeSearchComponent implements OnInit, AfterViewInit {
     this.searchQuery.set(query);
   }
 
-  filterDataSource(data: BikeSearchModel[] = this.bikeService.bikes()): void {
+  filterDataSource(data: BikeSearchModel[] = this.bikes()): void {
     this.dataSource = new MatTableDataSource<BikeSearchModel>();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -123,7 +124,7 @@ export class BikeSearchComponent implements OnInit, AfterViewInit {
   
   private _clearTable(): void {
     this.dataSource.data = [];
-    this.bikeService.bikes.set([]);
+    this.bikes.set([]);
     this.loading.set(false);
     this.errorMessage.set('');
   }

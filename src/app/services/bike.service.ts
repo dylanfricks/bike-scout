@@ -9,7 +9,7 @@ import { BikeDetailModel, BikeDetailInterface } from '../models/bike-detail.mode
   providedIn: 'root'
 })
 export class BikeService {
-  bikes = signal<BikeSearchModel[]>([]);
+  // bikes = signal<BikeSearchModel[]>([]);
   private apiUrl = environment ? environment.apiUrl : 'https://bikeindex.org/api/v3';
 
   constructor(private http: HttpClient) {}
